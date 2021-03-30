@@ -1,19 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import { StatusBar } from 'react-native';
+import { ActivityIndicator } from 'react-native';
 import {
   ScreenContainer,
   TopContainer,
   TitleContainer,
   ContentContainer,
+  LoaderContainer,
 } from './styles';
-import { Title, IconButton, Input, HousesList } from '../../components';
+import {
+  Title,
+  IconButton,
+  Input,
+  HousesList,
+  DetailText,
+} from '../../components';
 import { getHousesCall } from '../../services/calls';
 
 export const HomeScreen = () => {
   const [housesListData, setHousesListData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const callGetHouses = async () => {
     const result = await getHousesCall();
+    setLoading(false);
     setHousesListData(result.properties || []);
   };
 
@@ -23,9 +32,8 @@ export const HomeScreen = () => {
 
   return (
     <ScreenContainer>
-      <HousesList data={housesListData}>
+      <HousesList data={housesListData} loading={loading}>
         <ContentContainer>
-          <StatusBar translucent backgroundColor="transparent" />
           <TopContainer>
             <TitleContainer>
               <Title>Encotre aqui seu imóvel</Title>
@@ -35,6 +43,13 @@ export const HomeScreen = () => {
           </TopContainer>
 
           <Input label="Localização" placeholder="Digite o endereço" />
+
+          {loading && (
+            <LoaderContainer>
+              <ActivityIndicator size="large" color="#FFF" />
+              <DetailText>Carregando...</DetailText>
+            </LoaderContainer>
+          )}
         </ContentContainer>
       </HousesList>
     </ScreenContainer>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { CardTitle, CardHighlightText, CardDescription } from '../../atoms';
+import { formatCurrencyUSD } from '../../../shared/formatCurrency';
 import {
   CardContainer,
   CardImage,
@@ -18,7 +19,7 @@ export const HouseCard = ({ imgSource, title, description, price }) => {
           <CardDescription>{description}</CardDescription>
         </TextContainerLeft>
         <TextContainerRight>
-          <CardHighlightText>{price}</CardHighlightText>
+          <CardHighlightText>{formatCurrencyUSD(price)}</CardHighlightText>
         </TextContainerRight>
       </TextContainer>
     </CardContainer>
