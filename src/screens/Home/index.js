@@ -1,23 +1,42 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'react-native';
-import { ScreenContainer, TopContainer, TitleContainer } from './styles';
-import { Title, IconButton, Input, HouseCards } from '../../components';
+import {
+  ScreenContainer,
+  TopContainer,
+  TitleContainer,
+  ContentContainer,
+} from './styles';
+import { Title, IconButton, Input, HousesList } from '../../components';
+import { getHousesCall } from '../../services/calls';
 
 export const HomeScreen = () => {
+  const [housesListData, setHousesListData] = useState([]);
+
+  const callGetHouses = async () => {
+    const result = await getHousesCall();
+    setHousesListData(result.properties || []);
+  };
+
+  useEffect(() => {
+    callGetHouses();
+  }, []);
+
   return (
     <ScreenContainer>
-      <StatusBar translucent backgroundColor="transparent" />
-      <TopContainer>
-        <TitleContainer>
-          <Title>Encotre aqui seu imóvel</Title>
-        </TitleContainer>
+      <HousesList data={housesListData}>
+        <ContentContainer>
+          <StatusBar translucent backgroundColor="transparent" />
+          <TopContainer>
+            <TitleContainer>
+              <Title>Encotre aqui seu imóvel</Title>
+            </TitleContainer>
 
-        <IconButton iconName="filter" />
-      </TopContainer>
+            <IconButton iconName="filter" />
+          </TopContainer>
 
-      <Input label="Localização" placeholder="Digite o endereço" />
-
-      <HouseCards imgSource="https://images.unsplash.com/photo-1571055107559-3e67626fa8be?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=889&q=80" />
+          <Input label="Localização" placeholder="Digite o endereço" />
+        </ContentContainer>
+      </HousesList>
     </ScreenContainer>
   );
 };

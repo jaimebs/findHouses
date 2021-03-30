@@ -8,17 +8,17 @@ import {
   TextContainerRight,
 } from './styles';
 
-export const HouseCards = ({ imgSource }) => {
+export const HouseCard = ({ imgSource, title, description, price }) => {
   return (
     <CardContainer>
       <CardImage source={{ uri: imgSource }} />
       <TextContainer>
         <TextContainerLeft>
-          <CardTitle>Casa à venda</CardTitle>
-          <CardDescription>Rua Teste, 2105</CardDescription>
+          <CardTitle>{title}</CardTitle>
+          <CardDescription>{description}</CardDescription>
         </TextContainerLeft>
         <TextContainerRight>
-          <CardHighlightText> U$ 200.00</CardHighlightText>
+          <CardHighlightText>{price}</CardHighlightText>
         </TextContainerRight>
       </TextContainer>
     </CardContainer>

@@ -1,2 +1,2 @@
 export * from './Input';
-export * from './HouseCards';
+export * from './HouseCard';

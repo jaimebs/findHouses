@@ -53,7 +53,7 @@ export const CardDescription = styled.Text`
 `;
 
 export const CardHighlightText = styled.Text`
-  font-size: ${({ theme }) => theme.metrics.px(16)}px;
+  font-size: ${({ theme }) => theme.metrics.px(14)}px;
   color: white;
   font-family: 'Montserrat-SemiBold';
 `;
