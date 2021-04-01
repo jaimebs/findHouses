@@ -8,24 +8,27 @@ import {
 import { Title, IconButton, Input, HousesList } from '../../components';
 import { getHousesCall } from '../../services/calls';
 import { Loader } from '../../components';
+import { useHousesStore } from '../../services/stores';
 
 export const HomeScreen = () => {
-  const [housesListData, setHousesListData] = useState([]);
+  // Usando zustand para gerenciar o estado global.
+  const { housesList, setHousesList } = useHousesStore();
   const [loading, setLoading] = useState(true);
 
   const callGetHouses = async () => {
     const result = await getHousesCall();
     setLoading(false);
-    setHousesListData(result.properties || []);
+    setHousesList(result.properties || []);
   };
 
   useEffect(() => {
     callGetHouses();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <ScreenContainer>
-      <HousesList data={housesListData} loading={loading}>
+      <HousesList data={housesList} loading={loading}>
         <ContentContainer>
           <TopContainer>
             <TitleContainer>

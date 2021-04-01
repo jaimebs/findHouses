@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { formatCurrencyUSD } from '../../shared/formatCurrency';
 import { getHouseDetail } from '../../services/calls';
+import { useHousesStore } from '../../services/stores';
 import {
   IconButton,
   DetailSectionTitle,
@@ -17,8 +18,9 @@ import {
   FeaturesContainer,
 } from './styles';
 
-export const DetailScreen = ({ route, navigation }) => {
-  const { selectedHouse } = route.params;
+export const DetailScreen = ({ navigation }) => {
+  // Recuperando o item selecionado com o Zustand
+  const { selectedHouse } = useHousesStore();
   const [detail, setDetail] = useState(null);
   const [loading, setLoading] = useState(true);
 
