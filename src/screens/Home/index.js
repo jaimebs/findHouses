@@ -1,20 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator } from 'react-native';
 import {
   ScreenContainer,
   TopContainer,
   TitleContainer,
   ContentContainer,
-  LoaderContainer,
 } from './styles';
-import {
-  Title,
-  IconButton,
-  Input,
-  HousesList,
-  DetailText,
-} from '../../components';
+import { Title, IconButton, Input, HousesList } from '../../components';
 import { getHousesCall } from '../../services/calls';
+import { Loader } from '../../components';
 
 export const HomeScreen = () => {
   const [housesListData, setHousesListData] = useState([]);
@@ -44,12 +37,7 @@ export const HomeScreen = () => {
 
           <Input label="Localização" placeholder="Digite o endereço" />
 
-          {loading && (
-            <LoaderContainer>
-              <ActivityIndicator size="large" color="#FFF" />
-              <DetailText>Carregando...</DetailText>
-            </LoaderContainer>
-          )}
+          {loading && <Loader texto="Carregado Lista de imóveis..." />}
         </ContentContainer>
       </HousesList>
     </ScreenContainer>

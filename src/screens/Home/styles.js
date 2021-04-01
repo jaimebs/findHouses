@@ -32,11 +32,3 @@ export const TopContainer = styled.View`
 export const TitleContainer = styled.View`
   width: 60%;
 `;
-
-export const LoaderContainer = styled.View`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: ${({ theme }) => theme.metrics.px(30)}px;
-`;

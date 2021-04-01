@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { SplashScreen, HomeScreen } from '../screens';
+import { SplashScreen, HomeScreen, DetailScreen } from '../screens';
 
 const Stack = createStackNavigator();
 
@@ -9,6 +9,7 @@ const Routes = () => {
     <Stack.Navigator headerMode="none">
       <Stack.Screen name="Splash" component={SplashScreen} />
       <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="Detail" component={DetailScreen} />
     </Stack.Navigator>
   );
 };

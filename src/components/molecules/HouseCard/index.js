@@ -1,6 +1,7 @@
 import React from 'react';
 import { CardTitle, CardHighlightText, CardDescription } from '../../atoms';
 import { formatCurrencyUSD } from '../../../shared/formatCurrency';
+import { useNavigation } from '@react-navigation/native';
 import {
   CardContainer,
   CardImage,
@@ -9,9 +10,12 @@ import {
   TextContainerRight,
 } from './styles';
 
-export const HouseCard = ({ imgSource, title, description, price }) => {
+export const HouseCard = ({ imgSource, title, description, price, item }) => {
+  const navigation = useNavigation();
+
   return (
-    <CardContainer>
+    <CardContainer
+      onPress={() => navigation.navigate('Detail', { selectedHouse: item })}>
       <CardImage source={{ uri: imgSource }} />
       <TextContainer>
         <TextContainerLeft>
