@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { Alert } from 'react-native';
 import { formatCurrencyUSD } from '../../shared/formatCurrency';
 import { getHouseDetail } from '../../services/calls';
 import { useHousesStore } from '../../services/stores';
+import {
+  saveHouseAsFavorite,
+  getHouseIfFavorite,
+  removeHouseAsFavorite,
+} from '../../services/db';
 import {
   IconButton,
   DetailSectionTitle,
@@ -21,11 +27,29 @@ import {
 export const DetailScreen = ({ navigation }) => {
   // Recuperando o item selecionado com o Zustand
   const { selectedHouse } = useHousesStore();
+  const [favorite, setFavorite] = useState(false);
   const [detail, setDetail] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const goBackHome = () => {
     navigation.goBack();
+  };
+
+  const checkIfHouseAsFavotire = async () => {
+    const isFavorite = await getHouseIfFavorite(selectedHouse.property_id);
+    setFavorite(isFavorite);
+  };
+
+  const saveFavoriteHouse = async () => {
+    if (favorite) {
+      await removeHouseAsFavorite(selectedHouse.property_id);
+      Alert.alert('Aviso :-)', 'Imóvel removido como favorito com sucesso!');
+      setFavorite(false);
+    } else {
+      await saveHouseAsFavorite(selectedHouse.property_id);
+      Alert.alert('Aviso :-)', 'Imóvel salvo como favorito com sucesso!');
+      setFavorite(true);
+    }
   };
 
   const callHouseDetail = async () => {
@@ -37,18 +61,20 @@ export const DetailScreen = ({ navigation }) => {
 
   useEffect(() => {
     callHouseDetail();
+    checkIfHouseAsFavotire();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <ScreenContainer>
       <ImageBackground source={{ uri: selectedHouse.photos[0].href }}>
+        <IconButton iconName="chevron-back" transparent onPress={goBackHome} />
         <IconButton
-          iconName="chevron-back"
+          iconName={favorite ? 'star' : 'star-outline'}
           transparent
-          onPress={() => goBackHome()}
+          onPress={saveFavoriteHouse}
+          fill={favorite}
         />
-        <IconButton iconName="star-outline" transparent />
       </ImageBackground>
 
       {loading ? (
